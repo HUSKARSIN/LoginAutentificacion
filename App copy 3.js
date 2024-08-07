@@ -7,10 +7,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
 import { auth } from './firebaseConfig'; // Importa auth desde firebaseConfig
 
-// Importa la imagen de perfil desde la carpeta assets
-import profilePicture from './assets/image/thres.jpg'; 
-
 const uri = 'https://ak.picdn.net/shutterstock/videos/1060308725/thumb/1.jpg';
+const profilePicture = 'https://randomuser.me/api/portraits/men/34.jpg';
 
 function HomeScreen() {
   return (
@@ -61,7 +59,7 @@ function LoginScreen() {
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <BlurView intensity={100}>
           <View style={styles.login}>
-            <Image source={profilePicture} style={styles.profilePicture} />
+            <Image source={{ uri: profilePicture }} style={styles.profilePicture} />
             <View>
               <Text style={styles.label}>E-mail</Text>
               <TextInput
@@ -120,7 +118,7 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     ...StyleSheet.absoluteFillObject,
   },
- /*overlayPurple: {
+  overlayPurple: {
     width: 100,
     height: 100,
     backgroundColor: 'purple',
@@ -141,7 +139,7 @@ const styles = StyleSheet.create({
     bottom: 120,
     position: 'absolute',
     borderRadius: 50,
-  },*/
+  },
   scrollContainer: {
     flex: 1,
     width: '100%',

@@ -7,15 +7,13 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
 import { auth } from './firebaseConfig'; // Importa auth desde firebaseConfig
 
-// Importa la imagen de perfil desde la carpeta assets
-import profilePicture from './assets/image/thres.jpg'; 
-
 const uri = 'https://ak.picdn.net/shutterstock/videos/1060308725/thumb/1.jpg';
+const profilePicture = 'https://randomuser.me/api/portraits/men/34.jpg';
 
 function HomeScreen() {
   return (
     <View style={styles.centeredView}>
-      <Text>Home screen</Text>
+      <Text style={styles.homeText}>Welcome to the Home Screen!</Text>
     </View>
   );
 }
@@ -59,35 +57,36 @@ function LoginScreen() {
       <View style={styles.overlayBlue} />
       <View style={styles.overlayRed} />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <BlurView intensity={100}>
+        <BlurView intensity={100} style={styles.blurView}>
           <View style={styles.login}>
-            <Image source={profilePicture} style={styles.profilePicture} />
-            <View>
+            <Image source={{ uri: profilePicture }} style={styles.profilePicture} />
+            <Text style={styles.title}>Login</Text>
+            <View style={styles.inputContainer}>
               <Text style={styles.label}>E-mail</Text>
               <TextInput
                 onChangeText={(text) => setEmail(text)}
                 style={styles.input}
-                placeholder="IngresarCorreo@example"
+                placeholder="example@example.com"
+                placeholderTextColor="#aaa"
                 keyboardType="email-address"
               />
             </View>
-            <View>
+            <View style={styles.inputContainer}>
               <Text style={styles.label}>Password</Text>
               <TextInput
                 onChangeText={(text) => setPassword(text)}
                 style={styles.input}
-                placeholder="password"
+                placeholder="********"
+                placeholderTextColor="#aaa"
                 secureTextEntry={true}
               />
             </View>
-            <View>
-              <TouchableOpacity onPress={handleSignIn} style={[styles.button, styles.buttonLogin]}>
-                <Text style={styles.buttonText}>Login</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={handleCreateAccount} style={[styles.button, styles.buttonCreateAccount]}>
-                <Text style={styles.buttonText}>Create Account</Text>
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity onPress={handleSignIn} style={[styles.button, styles.buttonLogin]}>
+              <Text style={styles.buttonText}>Login</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleCreateAccount} style={[styles.button, styles.buttonCreateAccount]}>
+              <Text style={styles.buttonText}>Create Account</Text>
+            </TouchableOpacity>
           </View>
         </BlurView>
       </ScrollView>
@@ -113,6 +112,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
+    justifyContent: 'center',
   },
   image: {
     width: '100%',
@@ -120,75 +120,104 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     ...StyleSheet.absoluteFillObject,
   },
- /*overlayPurple: {
-    width: 100,
-    height: 100,
-    backgroundColor: 'purple',
+  overlayPurple: {
+    width: 120,
+    height: 120,
+    backgroundColor: 'rgba(128,0,128,0.5)', // Semi-transparent purple
     position: 'absolute',
+    top: -10,
+    left: -10,
+    borderRadius: 60,
   },
   overlayBlue: {
-    width: 100,
-    height: 100,
-    backgroundColor: 'blue',
-    top: 12,
+    width: 120,
+    height: 120,
+    backgroundColor: 'rgba(0,0,255,0.5)', // Semi-transparent blue
     position: 'absolute',
-    transform: [{ rotate: '45deg' }],
+    bottom: -10,
+    right: -10,
+    borderRadius: 60,
   },
   overlayRed: {
-    width: 100,
-    height: 100,
-    backgroundColor: 'red',
-    bottom: 120,
+    width: 120,
+    height: 120,
+    backgroundColor: 'rgba(255,0,0,0.5)', // Semi-transparent red
     position: 'absolute',
-    borderRadius: 50,
-  },*/
+    top: 70,
+    left: '50%',
+    transform: [{ translateX: -60 }],
+    borderRadius: 60,
+  },
   scrollContainer: {
-    flex: 1,
+    flexGrow: 1,
     width: '100%',
-    height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  blurView: {
+    borderRadius: 15,
+    padding: 20,
+    alignItems: 'center',
+    width: '80%',
+    backgroundColor: 'rgba(255,255,255,0.8)',
   },
   login: {
+    width: '100%',
     alignItems: 'center',
-    justifyContent: 'center',
   },
   profilePicture: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    marginBottom: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333',
+    marginVertical: 10,
+  },
+  inputContainer: {
+    width: '100%',
+    marginBottom: 20,
   },
   label: {
-    fontSize: 17,
-    fontWeight: '400',
-    color: 'white',
+    fontSize: 16,
+    color: '#333',
+    marginBottom: 5,
   },
   input: {
     height: 40,
-    borderColor: 'gray',
+    borderColor: '#ddd',
     borderBottomWidth: 1,
-    marginBottom: 20,
-    color: 'white',
+    paddingHorizontal: 10,
+    fontSize: 16,
   },
   button: {
-    padding: 10,
+    width: '100%',
+    padding: 15,
     borderRadius: 5,
-    margin: 10,
+    marginVertical: 10,
   },
   buttonLogin: {
-    backgroundColor: '#00CFEB90',
+    backgroundColor: '#00CFEB',
   },
   buttonCreateAccount: {
-    backgroundColor: '#6792F090',
+    backgroundColor: '#6792F0',
   },
   buttonText: {
-    fontSize: 17,
-    fontWeight: '400',
+    fontSize: 18,
+    fontWeight: '600',
     color: 'white',
+    textAlign: 'center',
   },
   centeredView: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  homeText: {
+    fontSize: 24,
+    fontWeight: 'bold',
   },
 });
